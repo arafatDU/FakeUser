@@ -1,10 +1,10 @@
-const { generateNoErrorUser } = require('../utils/generateUsers.js');
+const { generateUsers } = require('../utils/generateUsers.js');
 const { switchFakerRegion } = require('../utils/faker.js');
 
 const userController = (req, res) => {
   try {
 
-    const { errorRate, region, seed } = req.query;
+    const { errorRate, region, seed, batch } = req.query;
     if (!errorRate || !region || !seed) {
       return res.status(400).json({
         message: 'Missing query parameters',
@@ -13,6 +13,7 @@ const userController = (req, res) => {
 
     const errorRateNumber = Math.abs(parseInt(errorRate), 10);
     const seedNumber = Math.abs(parseInt(seed), 10);
+    const batchSize = Math.abs(parseInt(batch), 10) || 10;
     
     console.log('errorRateNumber', errorRateNumber);
     console.log('seedNumber', seedNumber);
@@ -20,7 +21,7 @@ const userController = (req, res) => {
 
     const faker = switchFakerRegion(region);
     faker.seed(seedNumber);
-    const user = generateNoErrorUser(faker, region);
+    const user = generateUsers(faker, batchSize, errorRateNumber, region)
 
     return res.status(200).json({
       message: 'Get all users',

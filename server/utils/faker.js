@@ -31,7 +31,7 @@ const generateAddress = (faker) => {
 
 const generatePhone = (faker, region) => {
   const phone = PHONES[region];
-  console.log('phone', phone);
+  //console.log('phone', phone);
   const generatedPN = phone.replace(/\d/g, () => faker.number.int(9));
 
   return generatedPN;
