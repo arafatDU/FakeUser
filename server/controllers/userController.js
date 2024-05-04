@@ -3,13 +3,13 @@ const { switchFakerRegion } = require('../utils/faker.js');
 
 const userController = (req, res) => {
   try {
-    if(!req.query) {
-      return res.status(400).json({
-        message: 'Bad request',
-      });
-    }
 
     const { errorRate, region, seed } = req.query;
+    if (!errorRate || !region || !seed) {
+      return res.status(400).json({
+        message: 'Missing query parameters',
+      });
+    }
 
     const errorRateNumber = Math.abs(parseInt(errorRate), 10);
     const seedNumber = Math.abs(parseInt(seed), 10);
@@ -19,8 +19,8 @@ const userController = (req, res) => {
     console.log('region', region);
 
     const faker = switchFakerRegion(region);
-    
-    const user = generateNoErrorUser(faker);
+    faker.seed(seedNumber);
+    const user = generateNoErrorUser(faker, region);
 
     return res.status(200).json({
       message: 'Get all users',

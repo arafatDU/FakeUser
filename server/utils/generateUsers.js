@@ -1,16 +1,17 @@
-const { generateName, generateAddress } = require('./faker.js');
+const { generateName, generateAddress, generatePhone } = require('./faker.js');
 
-const generateUser = (faker) => {
+const generateUser = (faker, region) => {
   const name = generateName(faker);
   const address = generateAddress(faker);
+  const phone = generatePhone(faker, region);
 
-  return { ...name, ...address };
+  return { ...name, ...address, phone };
 };
 
 
-const generateNoErrorUser = (faker) => {
+const generateNoErrorUser = (faker, region) => {
   const id = faker.string.uuid();
-  const user = generateUser(faker);
+  const user = generateUser(faker, region);
   return { id, ...user };
 };
 
