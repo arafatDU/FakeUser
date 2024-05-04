@@ -1,5 +1,5 @@
-const { allfakers, faker } = require('@faker-js/faker');
-
+const { generateNoErrorUser } = require('../utils/generateUsers.js');
+const { switchFakerRegion } = require('../utils/faker.js');
 
 const userController = (req, res) => {
   try {
@@ -17,31 +17,16 @@ const userController = (req, res) => {
     console.log('errorRateNumber', errorRateNumber);
     console.log('seedNumber', seedNumber);
     console.log('region', region);
-    
-    faker.seed(seedNumber);
-    // name
-    const firstName = faker.person.firstName()
-    const middleName = faker.person.middleName()
-    const lastName = faker.person.lastName()   
 
-    // address
-    const city = faker.location.city()
-    const street = faker.location.streetAddress()
-    const country = faker.location.country()
-    const zipCode = faker.location.zipCode()
+    const faker = switchFakerRegion(region);
+    
+    const user = generateNoErrorUser(faker);
 
     return res.status(200).json({
       message: 'Get all users',
-      data: {
-        firstName,
-        middleName,
-        lastName,
-        city,
-        street,
-        country,
-        zipCode,
-      },
+      data: user,
     });
+
   } catch (error) {
     console.error('Error in userController', error);
     return res.status(500).json({
