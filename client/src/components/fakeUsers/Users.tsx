@@ -1,10 +1,11 @@
+import LoadUserByPage from "./LoadUserPage";
 
 const Users = () => {
   return (
-    <div>
-      This is users components
-    </div>
-  )
-}
+    <section className="flex flex-col gap-6 max-w-6xl mx-auto">
+      <LoadUserByPage />
+    </section>
+  );
+};
 
-export default Users
+export default Users;
