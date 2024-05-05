@@ -4,7 +4,7 @@ const { switchFakerRegion } = require('../utils/faker.js');
 const userController = (req, res) => {
   try {
 
-    const { errorRate, region, seed, batch } = req.query;
+    const { seed, region,errorRate, batch } = req.query;
     if (!errorRate || !region || !seed) {
       return res.status(400).json({
         message: 'Missing query parameters',
